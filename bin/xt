@@ -1,0 +1,58 @@
+#!/bin/bash
+
+# Starts a terminal, like mintty.exe, default terminal
+# or xterm on Unix box - Dirk Heumann
+# Feel free to copy / adapt it for your own purpose.
+
+function main()
+{
+  local lCmd
+  if [ "Windows_NT" == "$OS" ]
+  then
+    local lF=/mingw
+    local lFr=/share/git/git-for-windows.ico
+    for lO in 64 32
+    do
+      if [ -f "$lF$lO$lFr" ]
+      then
+        lF="$lF$lO$lFr"
+        break
+      fi
+    done
+    lCmd="mintty.exe"
+    if [ -f "$lF" ]
+    then
+      echo "$lCmd --icon \"$lF\" 1>/dev/null 2>&1 &"
+      $lCmd --icon "$lF" 1>/dev/null 2>&1 &
+    else
+      echo "$lCmd 1>/dev/null 2>&1 &"
+      $lCmd 1>/dev/null 2>&1 &
+    fi
+  else
+    lCmd=x-terminal-emulator
+    lCmd="$(which ${lCmd} 2>/dev/null)"
+    if [ -x "$lCmd" ]
+    then
+      echo "$lCmd 1>/dev/null 2>&1 &"
+      $lCmd 1>/dev/null 2>&1 &
+      return 0
+    fi
+
+    lCmd=xterm
+    lCmd="$(which ${lCmd} 2>/dev/null)"
+    if [ -x "$lCmd" ]
+    then
+      echo "$lCmd -ls -vb -rw -sb -sl 512 -fn '-misc-fixed-*-*-*-*-*-*-*-*-*-*-*-*' 1>/dev/null 2>&1 &"
+      $lCmd -ls -vb -rw -sb -sl 512 -fn '-misc-fixed-*-*-*-*-*-*-*-*-*-*-*-*' 1>/dev/null 2>&1 &
+      return 0
+    else
+      echo "Command \"$lCmd\" not found" >&2
+      return 1
+    fi
+  fi
+  # xterm -ls -vb -fn '-misc-fixed-*-*-*-*-*-*-*-*-*-*-*-*' 1>/dev/null 2>&1 &
+  # xterm -ls -vb -fn '-misc-fixed-*-*-*-*-*-*-*-*-*-*-*-*' -display $MYIP:0 1>/dev/null 2>&1 &
+  # xterm &
+}
+
+main $*
