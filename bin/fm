@@ -1,0 +1,35 @@
+#!/usr/bin/env bash
+#
+# QQQ: . or "$(pwd -P)" ???
+#
+function main()
+{
+  local lArg1
+  if [ -z "$1" ]
+  then
+    lArg1=.
+  else
+    lArg1="$1"
+  fi
+  # echo \$lArg1=$lArg1 >&2  
+
+  if [ -x "$WINDIR/explorer.exe" ]
+  then
+    lArg1="$(echo $lArg1 | sed -e s/^\\/\\\([A-Za-z]*\\\)\\/\\\(.*\\\)/\\1:\\/\\2/ -e s/\\//\\\\/g)"
+    # echo \$lArg1=$lArg1 >&2
+
+    if [ -d "$lArg1" ]
+    then
+      "$WINDIR/explorer.exe" "$lArg1"
+    else
+      start "" "$lArg1"
+    fi
+  else
+    echo xdg-open "$lArg1" 1\>/dev/null \2\>\&1 \&
+    xdg-open "$lArg1" 1>/dev/null 2>&1 &
+  fi
+}
+
+# echo \$1=$1 >&2
+main "$@"
+exit $?
