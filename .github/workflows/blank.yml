@@ -44,5 +44,12 @@ jobs:
             if [ "0" != "$lR" ]
             then
               echo $it not found
+            else
+              if [ "perl" != "$it" ]
+              then
+                $it --version
+              else
+                $it -v
+              fi
             fi
           done
