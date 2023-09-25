@@ -34,3 +34,6 @@ jobs:
         run: |
           echo Add other actions to build,
           echo test, and deploy your project.
+          cat /etc/os-release
+          it=bash
+          which $it || echo $it not there
