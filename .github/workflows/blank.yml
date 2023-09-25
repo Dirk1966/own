@@ -54,3 +54,4 @@ jobs:
             fi
           done
           printf "ls -l /usr/bin\n%s\n" "$(ls -l /usr/bin)"
+          printf "uname -a\n" "$(uname -a)"
