@@ -37,7 +37,7 @@ jobs:
           echo Add other actions to build,
           echo test, and deploy your project.
           cat /etc/os-release
-          for it in bash perl python python3
+          for it in bash git perl python python3
           do
             lR=0
             which $it || lR=$?
@@ -53,3 +53,4 @@ jobs:
               fi
             fi
           done
+          printf "ls -l /usr/bin\n%s\n" "$(ls -l /usr/bin)"
