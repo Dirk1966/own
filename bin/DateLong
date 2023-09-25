@@ -1,0 +1,5 @@
+#!/bin/sh
+echo "date -u +%Y-%m-%d_%Hu%M\ %V\ %a\ %s"
+date -u +%Y-%m-%d_%Hu%M\ %V\ %a\ %s
+echo "date    +%Y-%m-%d\ %Hh%M\ %V\ %a\ %s"
+date    +%Y-%m-%d\ %Hh%M\ %V\ %a\ %s
