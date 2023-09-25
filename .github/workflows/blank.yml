@@ -54,4 +54,5 @@ jobs:
             fi
           done
           printf "ls -l /usr/bin\n%s\n" "$(ls -l /usr/bin)"
-          printf "uname -a\n" "$(uname -a)"
+          printf "uname -a\n%s\n" "$(uname -a)"
+          printf "lscpu\n%s\n" "$(lscpu)"
