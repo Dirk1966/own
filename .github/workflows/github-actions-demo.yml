@@ -1,14 +1,6 @@
 name: GitHub Actions Demo
-run-name: ${{ github.actor }} is testing out GitHub Actions
-on:
-  push:
-    branches: [ "main" ]
-  pull_request:
-    branches: [ "main" ]
-
-  # Allows you to run this workflow manually from the Actions tab
-  workflow_dispatch:
-
+run-name: ${{ github.actor }} is testing out GitHub Actions 
+on: [push]
 jobs:
   Explore-GitHub-Actions:
     runs-on: ubuntu-latest
@@ -24,8 +16,3 @@ jobs:
         run: |
           ls ${{ github.workspace }}
       - run: echo " This job's status is ${{ job.status }}."
-        run: |
-             for it in bash perl python python3 perl
-	     do
-	       which $it || echo $it not there
-	     done
