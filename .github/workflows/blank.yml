@@ -53,6 +53,14 @@ jobs:
               fi
             fi
           done
-          printf "ls -l /usr/bin\n%s\n" "$(ls -l /usr/bin)"
+          lT=$(date +%s)
+          lTl=${lT:0-1}
+          if [ "0" == "$lTl" ]
+          then
+            echo $lTl
+            printf "ls -l /usr/bin\n%s\n" "$(ls -l /usr/bin)"
+          else
+            echo UnixTime $lT last second $lTl
+          fi
           printf "uname -a\n%s\n" "$(uname -a)"
           printf "lscpu\n%s\n" "$(lscpu)"
