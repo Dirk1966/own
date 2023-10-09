@@ -62,10 +62,6 @@ jobs:
           else
             echo "No python found">&2
           fi
-          # Too complex, do it with RANDOM
-          # lT=$(date +%s)
-          # lTl=${lT:0-1}
-          # if [ "0" == "$lTl" ]
           if [ $(($RANDOM % 8)) -eq 0 ]
           then
             echo $lTl
