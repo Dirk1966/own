@@ -57,6 +57,7 @@ jobs:
           echo "\$py=$py">&2
           if [ "" != "$py" ]
           then
+            echo "\$PATH=$PATH">&2
             echo "$py -m pip install pylint">&2
             $py -m pip install pylint || echo "Statement to install pylint failed"
           else
