@@ -54,9 +54,10 @@ jobs:
             fi
           done
           py=$(which python3 || which python || echo "")
+          echo "\$py=$py">&2
           if [ "" != "$py" ]
           then
-            echo $py -m pip install pylint
+            echo "$py -m pip install pylint">&2
             $py -m pip install pylint || echo "Statement to install pylint failed"
           else
             echo "No python found">&2
@@ -70,7 +71,7 @@ jobs:
             echo $lTl
             printf "ls -l /usr/bin\n%s\n" "$(ls -l /usr/bin)"
           else
-            echo UnixTime $lT last second $lTl
+            echo "Do not list /usr/bin often - too large logs">&2
           fi
           printf "uname -a\n%s\n" "$(uname -a)"
           printf "lscpu\n%s\n" "$(lscpu)"
