@@ -1,11 +1,7 @@
-#!/bin/bash
-
-# Starts a terminal, like mintty.exe, default terminal
-# or xterm on Unix box - Dirk Heumann
-# Feel free to copy / adapt it for your own purpose.
-
+#!/usr/bin/env bash
 function main()
 {
+  # echo \$\#: $# >&2
   local lCmd
   if [ "Windows_NT" == "$OS" ]
   then
@@ -22,37 +18,48 @@ function main()
     lCmd="mintty.exe"
     if [ -f "$lF" ]
     then
-      echo "$lCmd --icon \"$lF\" 1>/dev/null 2>&1 &"
-      $lCmd --icon "$lF" 1>/dev/null 2>&1 &
+      echo "$lCmd --icon \"$lF\" \"$@\" 1>/dev/null 2>&1 &"
+      $lCmd --icon "$lF" "$@" 1>/dev/null 2>&1 &
     else
-      echo "$lCmd 1>/dev/null 2>&1 &"
-      $lCmd 1>/dev/null 2>&1 &
+      echo "$lCmd \"$@\" 1>/dev/null 2>&1 &"
+      $lCmd "$@" 1>/dev/null 2>&1 &
     fi
   else
     lCmd=x-terminal-emulator
     lCmd="$(which ${lCmd} 2>/dev/null)"
     if [ -x "$lCmd" ]
     then
-      echo "$lCmd 1>/dev/null 2>&1 &"
-      $lCmd 1>/dev/null 2>&1 &
-      return 0
+      echo "$lCmd \"$@\" \"$@\" 1>/dev/null 2>&1 &"
+      $lCmd "$@" 1>/dev/null 2>&1 &
+      return $?
+    fi
+
+    # Found in XFCE Manjaro LinUX, arch LinUX based
+    lCmd=/usr/bin/exo-open
+    if [ -x "$lCmd" ]
+    then
+      echo "/usr/bin/exo-open --launch TerminalEmulator \"$@\""
+      /usr/bin/exo-open --launch TerminalEmulator "$@"
+      return $?
     fi
 
     lCmd=xterm
     lCmd="$(which ${lCmd} 2>/dev/null)"
     if [ -x "$lCmd" ]
     then
-      echo "$lCmd -ls -vb -rw -sb -sl 512 -fn '-misc-fixed-*-*-*-*-*-*-*-*-*-*-*-*' 1>/dev/null 2>&1 &"
-      $lCmd -ls -vb -rw -sb -sl 512 -fn '-misc-fixed-*-*-*-*-*-*-*-*-*-*-*-*' 1>/dev/null 2>&1 &
-      return 0
+      echo "$lCmd -ls -vb -rw -sb -sl 512 -fn '-misc-fixed-*-*-*-*-*-*-*-*-*-*-*-*' \"$@\" 1>/dev/null 2>&1 &"
+      $lCmd -ls -vb -rw -sb -sl 512 -fn '-misc-fixed-*-*-*-*-*-*-*-*-*-*-*-*' "$@" 1>/dev/null 2>&1 &
+      return $?
     else
-      echo "Command \"$lCmd\" not found" >&2
+      echo Command $lCmd not found >&2
       return 1
     fi
   fi
   # xterm -ls -vb -fn '-misc-fixed-*-*-*-*-*-*-*-*-*-*-*-*' 1>/dev/null 2>&1 &
   # xterm -ls -vb -fn '-misc-fixed-*-*-*-*-*-*-*-*-*-*-*-*' -display $MYIP:0 1>/dev/null 2>&1 &
   # xterm &
+  return $?
 }
 
-main $*
+main "$@"
+exit $?
